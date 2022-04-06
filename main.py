@@ -16,11 +16,8 @@ from event import unknown
 
 
 def attendance():
-    # paths
     pathStaff = 'staffImgs'
     pathChild = 'childImgs'
-    # pathStaff = '../EyeSAVE-master/EyeSAVE_attendance_python/staffImgs'
-    # pathChild = '../EyeSAVE-master/EyeSAVE_attendance_python/childImgs'
     db = dbConnection.get_connection()
     children_collection = db["children"]
     staff_collection = db["staff"]
@@ -31,7 +28,7 @@ def attendance():
     role = []
     childrenList = os.listdir(pathChild)
     staffList = os.listdir(pathStaff)
-    # print(childrenList)
+    
     for cl in childrenList:
         # read image from repository
         Img = cv2.imread(f'{pathChild}/{cl}')
@@ -40,26 +37,24 @@ def attendance():
         # add the name to the array without .jpg
         id_list.append(os.path.splitext(cl)[0])
         role.append("child")
-    # print(id_list)
+
     for cl in staffList:
         Img = cv2.imread(f'{pathStaff}/{cl}')
         images.append(Img)
         id_list.append(os.path.splitext(cl)[0])
         role.append("staff")
-    # print(id_list)
 
     # encode the images
     encodeListKnown = findEncodings(images)
-    # print('Encoding Complete')
 
     # rtsp://tapocamnum2:Ss321352387@192.168.0.8:554/stream1
     # rtsp://tapocamnum1:Ss321352387@192.168.0.6:554/stream1
     # cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture("rtsp://tapocamnum2:Ss321352387@192.168.0.8:554/stream1")
+    cap = cv2.VideoCapture("rtsp://tapocamnum1:Ss321352387@176.229.235.86:555/stream1")
 
     while True:
         success, img = cap.read()
-        # resize and change colour of the live stream
+        # resize and change color of the live stream
         imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)
         imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
         # locate and encode faces from the frame
@@ -75,7 +70,6 @@ def attendance():
             # if the faces match change the name to upper letters and draw the rectangle around the face
             if matches[matchIndex]:
                 idString = id_list[matchIndex]
-                # print(id)
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
