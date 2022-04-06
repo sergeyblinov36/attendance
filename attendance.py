@@ -15,12 +15,15 @@ def markAttendance(id, role):
     # the jsons are saved in different repositories
     if role == "child":
         # path = children_collection
+        url = "http://localhost:8000/childrenAttendance/"
         query = "_childId"
         path = requests.get("http://localhost:8000/childrenAttendance/")
     else:
         # path = staff_collection
+        url = "http://localhost:8000/staffAttendance/"
         query = "_employeeId"
-        path = requests.get("http://localhost:8000/staffAttendance")
+        path = requests.get(url)
+        print(path.text)
     # DBelements = path.find()
     found = False
     for element in path.json():
@@ -59,7 +62,7 @@ def markAttendance(id, role):
 def createData(id, role, path):
     now = datetime.now()
     dString = now.strftime("%Y-%m-%d")
-    tString = now.strftime("%H:%M")
+    tString = now.strftime("%H:%M:%S")
 
     if role == "child":
         # path.insert_one(
@@ -82,11 +85,20 @@ def createData(id, role, path):
         request = requests.post(url, json=data)
         print(request.text)
     if role == "staff":
-        path.insert_one(
-            {
-                "_employeeId": int(id),
+        # path.insert_one(
+        #     {
+        #         "_employeeId": int(id),
+        #         "_date": dString,
+        #         "_arrivalTime": tString,
+        #         "_departureTime": "",
+        #     }
+        # )
+        url = "http://localhost:8000/staffAttendance/"
+        data = {"_employeeId": int(id),
                 "_date": dString,
                 "_arrivalTime": tString,
                 "_departureTime": "",
-            }
-        )
+                }
+        request = requests.post(url, json=data)
+        print(request.text)
+

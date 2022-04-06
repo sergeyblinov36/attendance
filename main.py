@@ -24,7 +24,7 @@ def attendance():
     db = dbConnection.get_connection()
     children_collection = db["children"]
     staff_collection = db["staff"]
-    finishTime = datetime.now().replace(hour=20, minute=30, second=0, microsecond=0)
+    finishTime = datetime.now().replace(hour=23, minute=30, second=0, microsecond=0)
     # arrays of images, names and roles(child or staff member)
     images = []
     id_list = []
@@ -54,8 +54,8 @@ def attendance():
 
     # rtsp://tapocamnum2:Ss321352387@192.168.0.8:554/stream1
     # rtsp://tapocamnum1:Ss321352387@192.168.0.6:554/stream1
-    cap = cv2.VideoCapture(0)
-    # cap = cv2.VideoCapture("rtsp://tapocamnum1:Ss321352387@192.168.0.3:554/stream1")
+    # cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture("rtsp://tapocamnum2:Ss321352387@192.168.0.8:554/stream1")
 
     while True:
         success, img = cap.read()
