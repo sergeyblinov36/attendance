@@ -135,10 +135,10 @@ def main():
     schedule.every().wednesday.at(settings[0]["_startMorning"]).do(attendance)
     schedule.every().thursday.at(settings[0]["_startMorning"]).do(attendance)
     # schedule.every().day.at("22:58").do(attendance)
-    # while True:
-    #     schedule.run_pending()
-    #     print("sleeping")
-    #     time.sleep(1)
+    while True:
+        schedule.run_pending()
+        print("sleeping")
+        time.sleep(1)
     attendance()
 
 
