@@ -1,9 +1,17 @@
 # Created by pytest automatically.
 *.mp4
+*.jpg
 /venv
 /__pycache__
 /.idea
 /attendance-python
+/ChildAttendance
+/childImgs
+/escortImgs
+/StaffAttendance
+/staffImgs
 /.vs
+/dbConnection.py
+/config.py
 
 

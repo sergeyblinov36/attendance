@@ -9,5 +9,6 @@ def findEncodings(images):
         # change image colour from BGR to RGB
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         encode = face_recognition.face_encodings(img)[0]
+        # encode = face_recognition.face_encodings(img, num_jitters=10)[0]
         encodeList.append(encode)
     return encodeList
